@@ -1,22 +1,29 @@
 from django.shortcuts import render
-
+from django.http import Http404
 from .models import Album
 # Create your views here.
 from django.http import HttpResponse
 from django.template import loader
-
+from django.shortcuts import render
 
 
 def index(request):
-    all_album  = Album.objects.all()
+    all_albums = Album.objects.all()
 
-    template = loader.get_template('')
-    html = ""
-    for album in all_album:
-        url = '/music/'+str(album.id)+'/'
-        html += '<a href="' + url + '">' + album.album_title + '</a><br>'
+    template = loader.get_template('music/index.html')
+    context = {
+        'all_albums': all_albums,
+    }
 
-    return HttpResponse(html)
+    return render(request,"music/index.html",context)
 
-def detail(request,album_id):
-    return HttpResponse("<h2> Detail for Album id: "+str(album_id)+"</h2>")
+
+def detail(request, album_id):
+
+    try:
+        album = Album.objects.get(pk=album_id)
+
+    except Album.DoesNotExist:
+        raise Http404(" album doesn't exist ")
+
+    return render(request, "music/detail.html", {'album': album})

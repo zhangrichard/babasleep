@@ -1,0 +1,10 @@
+{% extends 'music/base.html' %}
+
+
+{% if all_albums %}
+    <ul>
+        {% for album in all_albums %}
+        <li><a herf="/music/{{ album.id }}/">{{ album.album_title }} </a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
