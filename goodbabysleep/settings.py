@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-
+from django.core.mail import send_mail
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,10 +27,23 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+ACCOUNT_ACTIVATION_DAYS = 7
 # Application definition
 
 INSTALLED_APPS = [
+    # ...
+    'dash',
+    'dash.contrib.layouts.android',
+    'dash.contrib.layouts.bootstrap2',
+    'dash.contrib.layouts.windows8',
+    'dash.contrib.plugins.dummy',
+    'dash.contrib.plugins.image',
+    'dash.contrib.plugins.memo',
+    'dash.contrib.plugins.rss_feed',
+    'dash.contrib.plugins.url',
+    'dash.contrib.plugins.video',
+    'dash.contrib.plugins.weather',
+    # ...
     'posts.apps.PostsConfig',
     'music.apps.MusicConfig',
     'django.contrib.admin',
@@ -41,12 +54,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+MIDDLEWARE_CLASSES = [
+     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -60,6 +74,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -120,3 +135,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"static"),
+]
+
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media_cdn")
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ruichaozhg@gmail.com'
+EMAIL_HOST_PASSWORD = '06261315Gm!'
+EMAIL_PORT = 587
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

@@ -1,8 +1,9 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GoodSleepBaby</title>
+    <title>{% block head_title %}GoodSleepBaby{% endblock head_title %}</title>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 
@@ -11,11 +12,15 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+<link rel="stylesheet" href= '{% static "css/base.css"%}'>
 </head>
+
 <body>
-{% block body  %}
-{% endblock %}
+
+<!-- {% include 'message_display.html'%}-->
+<div class="container">
+    {% block content %}
+    {% endblock content %}
+</div>
 </body>
 </html>

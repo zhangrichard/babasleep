@@ -1,5 +1,6 @@
 {% extends 'music/base.html' %}
 
+{% block body  %}
 
 {% if all_albums %}
     <ul>
@@ -8,3 +9,5 @@
         {% endfor %}
     </ul>
 {% endif %}
+
+{% endblock %}
